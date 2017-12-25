@@ -1,0 +1,8 @@
+{
+  "author":"evan3334",
+  "version":"0.0.1",
+  "dependencies": {
+    "plist": "^2.1.0",
+    "promise": "^8.0.1"
+  }
+}
