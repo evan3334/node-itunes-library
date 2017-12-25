@@ -20,7 +20,7 @@ module.exports = function ituneslib() {
         reformat_keys(value);
       }
       delete data[key];
-      var newkey = key.toLowerCase().replace(/\s/,'');
+      var newkey = key.toLowerCase().replace(/\s/g,'');
       data[newkey] = value;
     });
   }
@@ -61,6 +61,6 @@ module.exports = function ituneslib() {
 
 
 
-}
+};
 
 
