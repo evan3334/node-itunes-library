@@ -79,11 +79,12 @@ module.exports = function ituneslib() {
       'location'
     ];
     if (trackData != null && typeof trackData === 'object') {
-      track_keys.forEach(function (key) {
+      for (var i = 0; i < track_keys.length; i++) {
+        var key = track_keys[i];
         if (trackData[key] !== null) {
-          this[key]=trackData[key];
+          this[key] = trackData[key];
         }
-      });
+      }
     }
   };
 
