@@ -14,13 +14,13 @@ module.exports = function ituneslib() {
 
   //function to reformat all the keys from the plist file to not be strings with spaces and stuff in them
   function reformat_keys(data) {
-    Object.keys(data).forEach(function(key){
+    Object.keys(data).forEach(function (key) {
       var value = data[key];
-      if(typeof value==='object') {
+      if (typeof value === 'object') {
         reformat_keys(value);
       }
       delete data[key];
-      var newkey = key.toLowerCase().replace(/\s/g,'');
+      var newkey = key.toLowerCase().replace(/\s/g, '_');
       data[newkey] = value;
     });
   }
@@ -58,9 +58,52 @@ module.exports = function ituneslib() {
     return data;
   };
 
+  this.Track = function Track(trackData) {
+    var track_keys = [
+      'track_id',
+      'size',
+      'total_time',
+      'date_modified',
+      'date_added',
+      'bit_rate',
+      'sample_rate',
+      'persistent_id',
+      'track_type',
+      'file_folder_count',
+      'library_folder_count',
+      'name',
+      'artist',
+      'album',
+      'genre',
+      'kind',
+      'location'
+    ];
+    if (trackData != null && typeof trackData === 'object') {
+      track_keys.forEach(function (key) {
+        if (trackData[key] !== null) {
+          this[key]=trackData[key];
+        }
+      });
+    }
+  };
 
+  this.getMajorVersion = function getMajorVersion() {
+    if (ready) {
+      return data.major_version;
+    }
+  };
 
+  this.getMinorVersion = function getMinorVersion() {
+    if (ready) {
+      return data.minor_version;
+    }
+  };
 
+  this.getApplicationVersion = function getApplicationVersion() {
+    if (ready) {
+      return data.application_version;
+    }
+  };
 };
 
 
