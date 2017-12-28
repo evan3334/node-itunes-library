@@ -5,7 +5,7 @@ var plist = require('plist');
 module.exports = function ituneslib() {
   var data;
   var ready = false;
-  let t = this;
+  var instance = this;
 
   //function to make sure we're given a valid file
   function validateFilename(fname) {
@@ -59,7 +59,7 @@ module.exports = function ituneslib() {
     return data;
   };
 
-  this.Track = function Track(trackData) {
+  module.exports.Track = function Track(trackData) {
     //list of all the properties that an iTunes library track will have
     var properties = [
       'track_id',
@@ -117,12 +117,12 @@ module.exports = function ituneslib() {
   };
 
   this.getTrackByIDSync = function getTrackByIDSync(id) {
-    var track = t.Track;
+    var Track = module.exports.Track;
     if (ready) {
       if (id !== null) {
         if (data.tracks[id]) {
           var tdata = data.tracks[id];
-          return new track(tdata);
+          return new Track(tdata);
         }
         else {
           throw new Error("No track found for the specified id!");
@@ -138,14 +138,14 @@ module.exports = function ituneslib() {
   };
 
   this.getTrackByID = function getTrackByID(id) {
-    var track = t.Track;
+    var Track = module.exports.Track;
     return new Promise(function (fulfill, reject) {
       if (ready) {
         if (id !== null) {
           if (data.tracks[id]) {
             try {
               var tdata = data.tracks[id];
-              var t = new track(tdata);
+              var t = new Track(tdata);
               fulfill(t);
             }
             catch (e) {
@@ -166,8 +166,66 @@ module.exports = function ituneslib() {
     })
   };
 
-  this.Playlist = function Playlist(playlistData) {
+  module.exports.Playlist = function Playlist(playlistData) {
+    var getTrackByIDSync = instance.getTrackByIDSync;
+    var thisPlaylist = this;
+    var properties = [
+      'master',
+      'playlist_id',
+      'playlist_persistent_id',
+      'all_items',
+      'visible',
+      'name',
+      'playlist_items',
+      'distinguished_kind',
+      'music',
+      'smart_info',
+      'smart_criteria',
+      'movies',
+      'tv_shows',
+      'podcasts',
+      'itunesu',
+      'audiobooks',
+      'books'
+    ];
+    if (playlistData != null && typeof playlistData === 'object') {
+      //go through all the valid properties and assign them to our new Track object
+      //this makes sure that a returned Track object always has the same properties and doesn't have any extras
+      for (var i = 0; i < properties.length; i++) {
+        //variable to hold current property
+        var prop = properties[i];
+        //set the current property's value to the new Trap object
+        this[prop] = playlistData[prop];
 
+      }
+    }
+
+    this.getPlaylistItems = function getPlaylistItems(full_data) {
+      return new Promise(function (fulfill, reject) {
+        try {
+          var output = [];
+          if (full_data === undefined) {
+            full_data = true;
+          }
+          if (thisPlaylist.playlist_items === null || thisPlaylist.playlist_items === undefined) {
+            fulfill([]);
+          }
+
+          for (var i = 0; i < thisPlaylist.playlist_items.length; i++) {
+            if (full_data) {
+              output.push(getTrackByIDSync(thisPlaylist.playlist_items[i].track_id));
+            }
+            else {
+              output.push(thisPlaylist.playlist_items[i]);
+            }
+          }
+          fulfill(output);
+        }
+        catch (e) {
+          reject(e);
+        }
+      });
+    }
   };
 
   this.getMajorVersion = function getMajorVersion() {
