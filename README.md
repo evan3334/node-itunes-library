@@ -54,3 +54,25 @@ All instances of this class will always have the following properties. Some of t
 - `genre` - Genre of the track
 - `kind` - string with the type of the audio file, all the ones I've seen have been of the form "AAC Audio File"
 - `location` - File (`file://`) URI with the absolute location of the audio file on disk.
+#### Functions:
+##### `open(filePath)`
+Opens an itunes library XML file. Returns a promise, which fulfills when parsing is complete and passes no arguments, and rejects if any error is encountered during the parsing process. This error will be passed to a function in `catch()`.
+
+**NOTE: You *MUST* call this function before any other! All other functions will throw errors if an XML file is not opened and parsed first.**
+
+##### `getTracks()`
+Function to get all the tracks in the iTunes library. Returns a promise, and passes an array of Track objects when the promise fulfills.
+
+The returned promise will reject if any error is thrown or if `open()` has not been called first.
+
+##### `getTrackByID(id)`
+Gets a track in the library by its ID. Returns a promise, passing a `Track` object when the promise fulfills.
+
+The returned promise will reject if no track was found for the ID, the ID passed is `null` or `undefined`, any error occurs during execution, or if `open()` has not been called first.
+
+##### `getTrackByIDSync(id)`
+Same thing as `getTrackByID` but operates synchronously. The function will block until a track is found, and the track is returned instead of a promise.
+
+Rather than rejecting a promise, this function will throw an error for any of the rejection conditions described in `getTrackByID`'s documentation.
+
+This is mostly for internal use and it is not recommended to use this function instead of an asynchronous one.
