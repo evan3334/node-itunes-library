@@ -287,11 +287,17 @@ module.exports = function ituneslib() {
     if (ready) {
       return data.major_version;
     }
+    else {
+      throw new Error("No data ready (call open() first)!");
+    }
   };
 
   this.getMinorVersion = function getMinorVersion() {
     if (ready) {
       return data.minor_version;
+    }
+    else {
+      throw new Error("No data ready (call open() first)!");
     }
   };
 
@@ -299,11 +305,17 @@ module.exports = function ituneslib() {
     if (ready) {
       return data.application_version;
     }
+    else {
+      throw new Error("No data ready (call open() first)!");
+    }
   };
 
   this.getDate = function getDate() {
     if (ready) {
       return data.date;
+    }
+    else {
+      throw new Error("No data ready (call open() first)!");
     }
   };
 
@@ -311,11 +323,17 @@ module.exports = function ituneslib() {
     if (ready) {
       return data.features;
     }
+    else {
+      throw new Error("No data ready (call open() first)!");
+    }
   };
 
   this.getShowContentRatings = function getShowContentRatings() {
     if(ready){
       return data.show_content_ratings;
+    }
+    else {
+      throw new Error("No data ready (call open() first)!");
     }
   };
 
@@ -323,11 +341,17 @@ module.exports = function ituneslib() {
     if(ready){
       return data.library_persistent_id;
     }
+    else {
+      throw new Error("No data ready (call open() first)!");
+    }
   };
 
   this.getMusicFolder = function getMusicFolder() {
     if(ready){
       return data.music_folder;
+    }
+    else {
+      throw new Error("No data ready (call open() first)!");
     }
   };
 
