@@ -1,4 +1,4 @@
-# node-itunes-library
+# node-itunes-library [![npm version](https://badge.fury.io/js/node-itunes-library.svg)](https://badge.fury.io/js/node-itunes-library)
 ## Description
 Node.JS module to parse an iTunes library database file.
 The module provides users with access to the track and playlist information inside the library, as well as other information such as the music folder location.
