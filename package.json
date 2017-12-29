@@ -4,10 +4,11 @@
   "repository": "https://www.github.com/evan3334/ituneslib",
   "license": "MIT",
   "author": "evan3334",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "dependencies": {
     "plist": "^2.1.0",
     "promise": "^8.0.1",
     "fs": "^0.0.1-security"
-  }
+  },
+  "main": "ItunesLibrary.js"
 }
