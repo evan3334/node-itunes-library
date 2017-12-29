@@ -37,7 +37,7 @@ Main class of the module. Returned when executing `require('node-itunes-library'
 Class to represent a single track in the iTunes library.
 
 All instances of this class will always have the following properties. Some of these properties may be undefined, please check before using them. **Please note that I'm not sure about the exact meanings or units of these properties, they are simply carried over from the ones iTunes creates and stores in its XML database file.** Apple doesn't document any of this stuff, it's all closed-source.
-- `track_id` - The id of the track
+- `track_id` - The ID of the track
 - `size` - The size of the audio file, I assume in bytes
 - `total_time` - Length in time of the track, I don't know the unit (could possibly be samples?)
 - `date_modified` - Date object representing the last modification of the file
@@ -54,6 +54,32 @@ All instances of this class will always have the following properties. Some of t
 - `genre` - Genre of the track
 - `kind` - string with the type of the audio file, all the ones I've seen have been of the form "AAC Audio File"
 - `location` - File (`file://`) URI with the absolute location of the audio file on disk.
+
+##### `Playlist`
+Class to represent a playlist in the iTunes library.
+
+All instances of this class will always have the following properties. Some of these properties may be undefined, please check before using them. **As with the `Track` class, the function or meaning of some of these in context may be unknown.**
+- `master` - Will be true if the playlist is the "master" playlist. Only the "Library" playlist seems to have this set to `true`; it seems that iTunes stores a playlist with every song in the library in it and marks that playlist as the "master" playlist.
+- `playlist_id` - The ID of the playlist
+- `playlist_persistent_id` - some other form of ID for the playlist, it's possible that `playlist_id` could change for the same playlist
+- `all_items` - Unknown purpose. Seems to be `true` for every playlist I've come across.
+- `visible` - Whether or not the playlist is visible to a user in the iTunes interface. Is usually `undefined`, except if explicitly defined `false`. Only seen in use with the "Library" master playlist.
+- `name` - The name of the playlist.
+- `playlist_items` - Array containing the items in the playlist. **Please note: this array only contains objects with a `track_id` property and no other data. If you want to get playlist items, it's recommended to use the `getPlaylistItems()` function instead - see below.**
+- `distinguished_kind` - Unknown purpose. Seems to be some kind of number.
+- `music` - Appears to be `true` if the playlist contains music and `undefined` otherwise.
+- `smart_info` - Some data in a mystery format relating to iTunes' "smart playlists". If defined, will be a `Buffer` object (in an iTunes XML file, this data is represented in Base64.)
+- `smart_criteria` - More data relating to smart playlists. Will also be a `Buffer` object if defined.
+- `movies` - Appears to be `true` if the playlist contains movies and `undefined` otherwise.
+- `tv_shows` - Appears to be `true` if the playlist contains TV shows and `undefined` otherwise.
+- `podcasts` - Appears to be `true` if the playlist contains podcasts and `undefined` otherwise.
+- `itunesu` - Unknown purpose.
+- `audiobooks` - Appears to be `true` if the playlist contains audiobooks and `undefined` otherwise.
+- `books` - Appears to be `true` if the playlist contains books and `undefined` otherwise.
+###### Functions
+###### `getPlaylistItems(full_data)`
+Will return a Promise. When fulfilled, will pass an array of `Playlist` classes if `full_data` is `true` or not passed. If `full_data` is explicitly defined as `false`, the Promise will simply be passed only playlist IDs, same as the contents of `playlist_items`.
+
 #### Functions:
 ##### `open(filePath)`
 Opens an itunes library XML file. Returns a promise, which fulfills when parsing is complete and passes no arguments, and rejects if any error is encountered during the parsing process. This error will be passed to a function in `catch()`.
@@ -71,8 +97,9 @@ Gets a track in the library by its ID. Returns a promise, passing a `Track` obje
 The returned promise will reject if no track was found for the ID, the ID passed is `null` or `undefined`, any error occurs during execution, or if `open()` has not been called first.
 
 ##### `getTrackByIDSync(id)`
-Same thing as `getTrackByID` but operates synchronously. The function will block until a track is found, and the track is returned instead of a promise.
+Same thing as `getTrackByID()` but operates synchronously. The function will block until a track is found, and the track is returned instead of a promise.
 
-Rather than rejecting a promise, this function will throw an error for any of the rejection conditions described in `getTrackByID`'s documentation.
+Rather than rejecting a promise, this function will throw an error for any of the rejection conditions described in `getTrackByID()`'s documentation.
 
 This is mostly for internal use and it is not recommended to use this function instead of an asynchronous one.
+
