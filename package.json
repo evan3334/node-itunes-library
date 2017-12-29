@@ -1,7 +1,7 @@
 {
   "name": "node-itunes-library",
   "description": "Module for parsing and retrieving data from an iTunes library database file",
-  "repository": "https://www.github.com/evan3334/ituneslib",
+  "repository": "https://www.github.com/evan3334/node-itunes-library",
   "license": "MIT",
   "author": "evan3334",
   "version": "1.1.1",
