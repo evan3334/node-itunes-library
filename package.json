@@ -4,7 +4,7 @@
   "repository": "https://www.github.com/evan3334/node-itunes-library",
   "license": "MIT",
   "author": "evan3334",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "dependencies": {
     "plist": "^2.1.0",
     "promise": "^8.0.1",
