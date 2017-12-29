@@ -2,7 +2,7 @@ var fs = require('fs');
 var Promise = require('promise');
 var plist = require('plist');
 
-module.exports = function ituneslib() {
+module.exports = function ItunesLibrary() {
   var data;
   var ready = false;
   var instance = this;
