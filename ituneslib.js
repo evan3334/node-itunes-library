@@ -215,7 +215,6 @@ module.exports = function ituneslib() {
       if (ready) {
         if (id !== null && id !== undefined) {
           try {
-            var found;
             var playlists = data.playlists;
             for (var i = 0; i < playlists.length; i++) {
               var playlist = playlists[i];
@@ -244,7 +243,6 @@ module.exports = function ituneslib() {
       if (ready) {
         if (id !== null && id !== undefined) {
           try {
-            var found;
             var playlists = data.playlists;
             for (var i = 0; i < playlists.length; i++) {
               var playlist = playlists[i];
