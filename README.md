@@ -143,3 +143,12 @@ Returns some kind of persistent ID for the library. Unknown what the exact purpo
 
 ##### `getMusicFolder()`
 Returns a File URI (`file://`) with the absolute location of the iTunes library directory on disk.
+
+## License
+This project is under the MIT license. Do what you want with it, but I take no responsibility for anything that happens with your use of it.
+
+## Contributing
+If you have any bug fixes or other contributions, please fork the repository and submit a pull request with the `bug-fix` tag. **Please test your code before making a pull request.**
+### Feature Requests
+I mostly made this library for retrieving basic information from an iTunes library, and decided to leave high-level parsing of any of the information or unknown properties up to anyone using the library. However, if you do figure out the exact meaning of any of the properties or have a meaningful addition to the project that doesn't really complicate the original function of the module, please submit an Issue or Pull Request with the `feature-request` or `new-feature` tag.
+
