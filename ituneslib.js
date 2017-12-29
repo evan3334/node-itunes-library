@@ -301,6 +301,36 @@ module.exports = function ituneslib() {
     }
   };
 
+  this.getDate = function getDate() {
+    if (ready) {
+      return data.date;
+    }
+  };
+
+  this.getFeatures = function getFeatures() {
+    if (ready) {
+      return data.features;
+    }
+  };
+
+  this.getShowContentRatings = function getShowContentRatings() {
+    if(ready){
+      return data.show_content_ratings;
+    }
+  };
+
+  this.getLibraryPersistentID = function getLibraryPersistentID() {
+    if(ready){
+      return data.library_persistent_id;
+    }
+  };
+
+  this.getMusicFolder = function getMusicFolder() {
+    if(ready){
+      return data.music_folder;
+    }
+  };
+
 //function to make sure we're given a valid file
   function validateFilename(fname) {
     //will fail if filename is null or not a string, file doesn't exist, or file is a directory
