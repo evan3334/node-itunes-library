@@ -7,25 +7,6 @@ module.exports = function ituneslib() {
   var ready = false;
   var instance = this;
 
-  //function to make sure we're given a valid file
-  function validateFilename(fname) {
-    //will fail if filename is null or not a string, file doesn't exist, or file is a directory
-    return (fname !== null && typeof fname === 'string' && fs.existsSync(fname) && !fs.lstatSync(fname).isDirectory());
-  }
-
-  //function to reformat all the keys from the plist file to not be strings with spaces and stuff in them
-  function reformat_keys(data) {
-    Object.keys(data).forEach(function (key) {
-      var value = data[key];
-      if (typeof value === 'object') {
-        reformat_keys(value);
-      }
-      delete data[key];
-      var newkey = key.toLowerCase().replace(/\s/g, '_');
-      data[newkey] = value;
-    });
-  }
-
   //opens an itunes library xml file and reads and reformats the data
   this.open = function open(filename) {
     if (!validateFilename(filename)) {
@@ -141,7 +122,7 @@ module.exports = function ituneslib() {
     var Track = module.exports.Track;
     return new Promise(function (fulfill, reject) {
       if (ready) {
-        if (id !== null) {
+        if (id !== null && id !== undefined) {
           if (data.tracks[id]) {
             try {
               var tdata = data.tracks[id];
@@ -228,6 +209,62 @@ module.exports = function ituneslib() {
     }
   };
 
+  this.getPlaylistByID = function getPlaylistByID(id) {
+    var Playlist = module.exports.Playlist;
+    return new Promise(function (fulfill, reject) {
+      if (ready) {
+        if (id !== null && id !== undefined) {
+          try {
+            var found;
+            var playlists = data.playlists;
+            for (var i = 0; i < playlists.length; i++) {
+              var playlist = playlists[i];
+              if (playlist.playlist_id && playlist.playlist_id === id) {
+                fulfill(new Playlist(playlist));
+              }
+            }
+          }
+          catch (e) {
+            reject(e);
+          }
+          reject(new Error("No playlist found for the specified id!"));
+        }
+        else {
+          reject(new Error("Playlist ID is null!"));
+        }
+      }
+      else {
+        reject(new Error("No data ready (call open() first)!"));
+      }
+    })
+  };
+
+  this.getPlaylistByIDSync = function getPlaylistByIDSync(id) {
+    var Playlist = module.exports.Playlist;
+      if (ready) {
+        if (id !== null && id !== undefined) {
+          try {
+            var found;
+            var playlists = data.playlists;
+            for (var i = 0; i < playlists.length; i++) {
+              var playlist = playlists[i];
+              if (playlist.playlist_id && playlist.playlist_id === id) {
+                return new Playlist(playlist);
+              }
+            }
+          }
+          throw new Error("No playlist found for the specified id!");
+        }
+        else {
+          throw new Error("Playlist ID is null!");
+        }
+      }
+      else {
+        throw new Error("No data ready (call open() first)!");
+      }
+    }
+  };
+
   this.getMajorVersion = function getMajorVersion() {
     if (ready) {
       return data.major_version;
@@ -245,5 +282,23 @@ module.exports = function ituneslib() {
       return data.application_version;
     }
   };
-}
-;
+
+  //function to make sure we're given a valid file
+  function validateFilename(fname) {
+    //will fail if filename is null or not a string, file doesn't exist, or file is a directory
+    return (fname !== null && typeof fname === 'string' && fs.existsSync(fname) && !fs.lstatSync(fname).isDirectory());
+  }
+
+  //function to reformat all the keys from the plist file to not be strings with spaces and stuff in them
+  function reformat_keys(data) {
+    Object.keys(data).forEach(function (key) {
+      var value = data[key];
+      if (typeof value === 'object') {
+        reformat_keys(value);
+      }
+      delete data[key];
+      var newkey = key.toLowerCase().replace(/\s/g, '_');
+      data[newkey] = value;
+    });
+  }
+};
