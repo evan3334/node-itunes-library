@@ -103,3 +103,19 @@ Rather than rejecting a promise, this function will throw an error for any of th
 
 This is mostly for internal use and it is not recommended to use this function instead of an asynchronous one.
 
+##### `getPlaylists()`
+Function to get all the playlists in the iTunes library. Returns a promise, and passes an array of Playlist objects when the promise fulfills.
+
+The returned promise will reject if any error is thrown or if `open()` has not been called first.
+
+##### `getPlaylistByID(id)`
+Gets a playlist in the library by its ID. Returns a promise, passing a `Playlist` object when the promise fulfills.
+
+The returned promise will reject if no playlist was found for the ID, the ID passed is `null` or `undefined`, any error occurs during execution, or if `open()` has not been called first.
+
+##### `getPlaylistByIDSync(id)`
+Same thing as `getPlaylistByID()` but operates synchronously. The function will block until a playlist is found, and the playlist is returned instead of a promise.
+
+Rather than rejecting a promise, this function will throw an error for any of the rejection conditions described in `getPlaylistByID()`'s documentation.
+
+This is mostly for internal use and it is not recommended to use this function instead of an asynchronous one.
