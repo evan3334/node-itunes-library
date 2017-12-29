@@ -119,3 +119,27 @@ Same thing as `getPlaylistByID()` but operates synchronously. The function will 
 Rather than rejecting a promise, this function will throw an error for any of the rejection conditions described in `getPlaylistByID()`'s documentation.
 
 This is mostly for internal use and it is not recommended to use this function instead of an asynchronous one.
+
+##### `getMajorVersion()`
+Returns what appears to be some kind of major version number. Was simply `1` while I was testing.
+
+##### `getMinorVersion()`
+Returns what appears to be some kind of minor version number. Was simply `1` while I was testing.
+
+##### `getApplicationVersion()`
+Appears to return the version of iTunes that the XML file was created by.
+
+##### `getDate()`
+Appears to return the date that the XML file was last modified.
+
+##### `getFeatures()`
+Unknown purpose. Returns a number, mine was `5` in testing.
+
+##### `getShowContentRatings()`
+Unknown purpose. Returns a boolean, could be whether or not to show content ratings in the iTunes library.
+
+##### `getLibraryPersistentID()`
+Returns some kind of persistent ID for the library. Unknown what the exact purpose of this is.
+
+##### `getMusicFolder()`
+Returns a File URI (`file://`) with the absolute location of the iTunes library directory on disk.
