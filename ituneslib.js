@@ -209,6 +209,29 @@ module.exports = function ituneslib() {
     }
   };
 
+  this.getPlaylists = function getPlaylists() {
+    var getPlaylistByIDSync = instance.getPlaylistByIDSync;
+    return new Promise(function (fulfill, reject) {
+      if (ready) {
+        try {
+          var playlists = data.playlists;
+          var output = [];
+          for (var i = 0; i < playlists.length; i++) {
+            var current_id = playlists[i].playlist_id;
+            output.push(getPlaylistByIDSync(current_id));
+          }
+          fulfill(output);
+        }
+        catch (e) {
+          reject(e);
+        }
+      }
+      else {
+        reject(new Error("No data ready (call open() first)!"));
+      }
+    })
+  };
+
   this.getPlaylistByID = function getPlaylistByID(id) {
     var Playlist = module.exports.Playlist;
     return new Promise(function (fulfill, reject) {
@@ -240,26 +263,23 @@ module.exports = function ituneslib() {
 
   this.getPlaylistByIDSync = function getPlaylistByIDSync(id) {
     var Playlist = module.exports.Playlist;
-      if (ready) {
-        if (id !== null && id !== undefined) {
-          try {
-            var playlists = data.playlists;
-            for (var i = 0; i < playlists.length; i++) {
-              var playlist = playlists[i];
-              if (playlist.playlist_id && playlist.playlist_id === id) {
-                return new Playlist(playlist);
-              }
-            }
+    if (ready) {
+      if (id !== null && id !== undefined) {
+        var playlists = data.playlists;
+        for (var i = 0; i < playlists.length; i++) {
+          var playlist = playlists[i];
+          if (playlist.playlist_id && playlist.playlist_id === id) {
+            return new Playlist(playlist);
           }
-          throw new Error("No playlist found for the specified id!");
         }
-        else {
-          throw new Error("Playlist ID is null!");
-        }
+        throw new Error("No playlist found for the specified id!");
       }
       else {
-        throw new Error("No data ready (call open() first)!");
+        throw new Error("Playlist ID is null!");
       }
+    }
+    else {
+      throw new Error("No data ready (call open() first)!");
     }
   };
 
@@ -281,13 +301,13 @@ module.exports = function ituneslib() {
     }
   };
 
-  //function to make sure we're given a valid file
+//function to make sure we're given a valid file
   function validateFilename(fname) {
     //will fail if filename is null or not a string, file doesn't exist, or file is a directory
     return (fname !== null && typeof fname === 'string' && fs.existsSync(fname) && !fs.lstatSync(fname).isDirectory());
   }
 
-  //function to reformat all the keys from the plist file to not be strings with spaces and stuff in them
+//function to reformat all the keys from the plist file to not be strings with spaces and stuff in them
   function reformat_keys(data) {
     Object.keys(data).forEach(function (key) {
       var value = data[key];
