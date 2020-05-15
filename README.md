@@ -1,4 +1,10 @@
 # node-itunes-library [![npm version](https://badge.fury.io/js/node-itunes-library.svg)](https://badge.fury.io/js/node-itunes-library)
+
+## This project is no longer supported.
+This library was made as a one-off thing when I was helping to export music from the iTunes library of a family member. I don't have access to iTunes to examine the library formats, and I also have a lot of time constraints due to being a student, so as such, **I currently have no plans to support this project further.** The project is free software, under the MIT (Expat) license, so you are welcome to use it as-is or fork it in order to contribute to it.
+
+Apologies for any inconvenience.
+
 ## Description
 Node.JS module to parse an iTunes library database file.
 The module provides users with access to the track and playlist information inside the library, as well as other information such as the music folder location.
@@ -147,8 +153,9 @@ Returns a File URI (`file://`) with the absolute location of the iTunes library 
 ## License
 This project is under the MIT license. Do what you want with it, but I take no responsibility for anything that happens with your use of it.
 
-## Contributing
-If you have any bug fixes or other contributions, please fork the repository and submit a pull request with the `bug-fix` label. **Please test your code before making a pull request.**
-### Feature Requests
-I mostly made this library for retrieving basic information from an iTunes library, and decided to leave high-level parsing of any of the information or unknown properties up to anyone using the library. However, if you do figure out the exact meaning of any of the properties or have a meaningful addition to the project that doesn't really complicate the original function of the module, please submit an Issue or Pull Request with the `feature-request` or `new-feature` label.
+## ~~Contributing~~
+This project is no longer supported and as such I won't really be reviewing contributions or feature requests. Please see above.
+~~If you have any bug fixes or other contributions, please fork the repository and submit a pull request with the `bug-fix` label. **Please test your code before making a pull request.**~~
+### ~~Feature Requests~~
+~~I mostly made this library for retrieving basic information from an iTunes library, and decided to leave high-level parsing of any of the information or unknown properties up to anyone using the library. However, if you do figure out the exact meaning of any of the properties or have a meaningful addition to the project that doesn't really complicate the original function of the module, please submit an Issue or Pull Request with the `feature-request` or `new-feature` label.~~
 
