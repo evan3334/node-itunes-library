@@ -6,7 +6,7 @@
   "author": "evan3334",
   "version": "1.1.2",
   "dependencies": {
-    "plist": "^2.1.0",
+    "plist": "^3.0.4",
     "promise": "^8.0.1",
     "fs": "^0.0.1-security"
   },
